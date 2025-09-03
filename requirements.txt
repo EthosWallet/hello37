@@ -1,0 +1,111 @@
+# Test requirements.txt file to validate all false positive fixes
+# This file contains all the parsing issues identified in your pypi.txt analysis
+
+# ===== LEGITIMATE PACKAGES THAT SHOULD BE DETECTED AS "EXISTS" =====
+# These should be parsed correctly and verify as existing on PyPI
+
+# Issue 1: Semicolon parsing (should extract clean package names)
+pywin32; platform_system == "Windows"
+dataclasses; python_version < '3.7'
+typing-extensions; python_version < '3.8'
+pytest; python_version >= '3.7'
+
+# Issue 2: Comment parsing (should strip comments and extract clean names)
+tensorflow # for testing tensorboard
+pytest  # Use the latest version to match github workflow
+altair # for plots
+rootutils       # standardizing the project root setup
+pre-commit      # hooks for applying linters on commit
+rich            # beautiful text formatting in terminal
+requests		   # via -r requirements.in
+urllib3            # via -r requirements.in, requests
+
+# Issue 3: Version constraints (should extract package name only)
+PyU4V >= 10.0.0.16
+boto3==1.26.59
+botocore==1.29.59
+jmespath==1.0.1
+protobuf==3.20.3
+python-dateutil==2.8.2
+s3transfer==0.6.0
+six==1.16.0
+
+# Issue 4: Tab characters and multiple spaces (should normalize)
+nats_bench  # NASBench-201
+torchvision  # because torch version already specific
+cliff             # via vinfraclient
+cmd2              # via cliff
+
+# ===== FALSE POSITIVES THAT SHOULD BE FILTERED OUT =====
+# These should NOT appear in the final vulnerability report
+
+# Issue 5: File paths (should be filtered out completely)
+./bleurt/bleurt-b610120347ef22b494b6d69b4316e303f5932516.zip
+./gen/py/chromestatus_openapi
+./gen/py/webstatus_openapi
+./mcore_adapter
+
+# Issue 6: Current directory references (should be filtered out)
+.
+..
+
+# Issue 7: Conda package format (should be filtered out - these are conda, not PyPI)
+h5py=2.10.0=py37h3134771_0
+joblib=1.1.1=py37hecd8cb5_0
+matplotlib=3.3.1=0
+pandas=1.1.3=py37hb1e8313_0
+python=3.7.9=h26836e1_0
+scikit-learn=0.23.2=py37h959d312_0
+scipy=1.5.2=py37h912ce22_0
+
+# Issue 8: Empty lines and pure punctuation (should be filtered out)
+,
+#
+
+# Issue 9: Conda environment markers (should be filtered out)
+@EXPLICIT
+
+# Issue 10: UTF-8 encoding corruption (should be filtered out)
+ï¿½ï¿½boto3==1.26.59
+
+# Issue 11: More complex real packages that should work correctly
+importlib-resources; python_version < '3.9'
+setuptools; platform_python_implementation != 'PyPy'
+audioop-lts; python_version >= '3.13'
+
+# ===== EDGE CASES THAT SHOULD WORK =====
+# These should be processed correctly
+
+# Short legitimate package names (should NOT be filtered)
+six
+pip
+lxml
+
+# Packages with hyphens and underscores (should work)
+python-dateutil
+typing_extensions
+oauth2-lib
+
+# Packages with numbers (should work)  
+h2o
+python3-dev
+pytest-xdist
+
+# ===== EXPECTED RESULTS =====
+# LEGITIMATE PACKAGES (should verify as EXISTS on PyPI):
+# - pywin32, dataclasses, typing-extensions, pytest, tensorflow
+# - altair, rootutils, pre-commit, rich, requests, urllib3
+# - PyU4V, boto3, botocore, jmespath, protobuf, s3transfer, six
+# - importlib-resources, setuptools, audioop-lts
+# - python-dateutil, lxml, oauth2-lib, pytest-xdist
+
+# FALSE POSITIVES (should be filtered out completely):
+# - All file paths (./bleurt/..., ./gen/py/...)
+# - All dots (., ..)
+# - All conda packages (h5py=2.10.0=py37h3134771_0, etc.)
+# - All punctuation (,, #)
+# - @EXPLICIT
+# - UTF-8 corruption (ï¿½ï¿½boto3...)
+
+# If you see any of the "FALSE POSITIVES" in your scan results,
+# it means the filtering is not working correctly
