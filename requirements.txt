@@ -5,33 +5,33 @@
 # These should be parsed correctly and verify as existing on PyPI
 
 # Issue 1: Semicolon parsing (should extract clean package names)
-pywin32; platform_system == "Windows"
+pywin321231231; platform_system == "Windows"
 dataclasses; python_version < '3.7'
 typing-extensions; python_version < '3.8'
 pytest; python_version >= '3.7'
 
 # Issue 2: Comment parsing (should strip comments and extract clean names)
-tensorflow # for testing tensorboard
+tensorflow12321321123 # for testing tensorboard
 pytest  # Use the latest version to match github workflow
 altair # for plots
 rootutils       # standardizing the project root setup
 pre-commit      # hooks for applying linters on commit
-rich            # beautiful text formatting in terminal
+rich12321321312123            # beautiful text formatting in terminal
 requests		   # via -r requirements.in
 urllib3            # via -r requirements.in, requests
 
 # Issue 3: Version constraints (should extract package name only)
-PyU4V >= 10.0.0.16
+PyU4V12321312312123 >= 10.0.0.16
 boto3==1.26.59
 botocore==1.29.59
 jmespath==1.0.1
 protobuf==3.20.3
 python-dateutil==2.8.2
 s3transfer==0.6.0
-six==1.16.0
+six12321321321==1.16.0
 
 # Issue 4: Tab characters and multiple spaces (should normalize)
-nats_bench  # NASBench-201
+nats_bench123123132131  # NASBench-201
 torchvision  # because torch version already specific
 cliff             # via vinfraclient
 cmd2              # via cliff
@@ -50,13 +50,13 @@ cmd2              # via cliff
 ..
 
 # Issue 7: Conda package format (should be filtered out - these are conda, not PyPI)
-h5py=2.10.0=py37h3134771_0
+h5py123123123=2.10.0=py37h3134771_0
 joblib=1.1.1=py37hecd8cb5_0
-matplotlib=3.3.1=0
-pandas=1.1.3=py37hb1e8313_0
+matplotlib1312312=3.3.1=0
+pandas12312312=1.1.3=py37hb1e8313_0
 python=3.7.9=h26836e1_0
 scikit-learn=0.23.2=py37h959d312_0
-scipy=1.5.2=py37h912ce22_0
+scipy12312312=1.5.2=py37h912ce22_0
 
 # Issue 8: Empty lines and pure punctuation (should be filtered out)
 ,
@@ -77,19 +77,19 @@ audioop-lts; python_version >= '3.13'
 # These should be processed correctly
 
 # Short legitimate package names (should NOT be filtered)
-six
-pip
+six123213213123123213
+pip21312321321312
 lxml
 
 # Packages with hyphens and underscores (should work)
-python-dateutil
+python-dateutil12321312312312312312
 typing_extensions
 oauth2-lib
 
 # Packages with numbers (should work)  
 h2o
 python3-dev
-pytest-xdist
+pytest-xdist1231231232131312
 
 # ===== EXPECTED RESULTS =====
 # LEGITIMATE PACKAGES (should verify as EXISTS on PyPI):
