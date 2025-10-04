@@ -29,6 +29,8 @@ protobuf==3.20.3
 python-dateutil==2.8.2
 s3transfer==0.6.0
 six12321321321==1.16.0
+six12321321323==1.16.0
+six12321321324==1.16.0
 
 # Issue 4: Tab characters and multiple spaces (should normalize)
 nats_bench123123132131  # NASBench-201
